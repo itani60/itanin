@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompareHubPrices - Compare Prices Across Categories</title>
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+ 
+    <script src="assets/scripts/local-business.js"></script>
+  
+
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/home.css">
+    <link rel="stylesheet" href="assets/css/sidebar.css">
+    <link rel="stylesheet" href="assets/css/card.css">
+  
+   
+    
+    <!-- Header Navigation Font -->
+    <style>
+        .notification-buttons .header-link,
+        .categories-dropdown .header-link {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+    </style>
+
+      <link rel="stylesheet" href="assets/css/footer.css">
+      <link rel="stylesheet" href="assets/css/notifications.css">
+      
+  
+    
+
+    
+</head>
+<body>
+    <!-- Desktop Header -->
+    <header class="header desktop-only">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <!-- Mobile Toggle Button - Left Corner -->
+                <div class="col-auto mobile-tablet-only">
+                    <button class="sidebar-toggle" aria-label="Open menu">☰</button>
+                </div>
+                
+                <div class="col-auto">
+                    <div class="logo">
+                        <img src="assets/logo.jpg" alt="CompareHubPrices" class="logo-img">
+                    </div>
+                </div>
+                
+                <!-- Categories Dropdown - Desktop Only -->
+                <div class="col-auto desktop-only">
+                    <div class="categories-dropdown">
+                        <a href="#categories" class="header-link">Categories <i class="fas fa-chevron-down" style="font-size: 0.7em;"></i></a>
+                        <div class="categories-menu">
+                            <div class="categories-column">
+                                <h4>Product Categories</h4>
+                                <a href="#smartphones-tablets" class="category-item" data-category="smartphones-tablets">
+                                    Smartphones and Tablets
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#laptops-accessories" class="category-item" data-category="laptops-accessories">
+                                    Laptops and Accessories
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#wearables" class="category-item" data-category="wearables">
+                                    Wearables Devices
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#televisions" class="category-item" data-category="televisions">
+                                    Televisions & Streaming Devices
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#audio" class="category-item" data-category="audio">
+                                    Audio
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#gaming" class="category-item" data-category="gaming">
+                                    Gaming
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#networking" class="category-item" data-category="networking">
+                                    Wi-Fi & Networking
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#appliances" class="category-item" data-category="appliances">
+                                    Appliances
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </div>
+                            <div class="categories-column subcategories-column" id="subcategories-column">
+                                <h4 id="subcategory-title">Select a category</h4>
+                                <div id="subcategory-content">
+                                    <p>Hover over a category to see subcategories</p>
+                                </div>
+                            </div>
+                            <div class="categories-column sub-subcategories-column" id="sub-subcategories-column">
+                                <h4 id="sub-subcategory-title">Select a subcategory</h4>
+                                <div id="sub-subcategory-content">
+                                    <p>Hover over a subcategory to see more options</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Header Search -->
+                <div class="col-auto desktop-only">
+                    <div class="header-search">
+                        <div class="search-wrapper">
+                            <div class="input-group" style="width: 350px;">
+                                <input type="text" id="headerSearchInput" placeholder="Search..." class="form-control search-input">
+                                <button type="button" class="btn btn-danger search-btn" onclick="performHeaderSearch()">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                            <!-- Desktop Search Suggestions Dropdown -->
+                            <div class="search-suggestions" id="headerSearchSuggestions">
+                                <div class="suggestions-content">
+                                    <!-- Suggestions will be populated here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Notification Buttons - Desktop Only -->
+                <div class="col-auto desktop-only">
+                    <div class="notification-buttons">
+                        <a href="#new-arrivals" class="header-link" onclick="showNewArrivals(); return false;">New Arrivals</a>
+                        <a href="#notifications" class="header-link" onclick="showNotifications(); return false;">Notifications</a>
+                        <a href="#local-business" class="header-link" onclick="showLocalBusiness(); return false;">Local Business</a>
+                        <div class="login-dropdown-container">
+                            <a href="#" class="header-link" id="desktopLoginBtn" onclick="toggleLoginState(); return false;">
+                                Login <i class="fas fa-chevron-down" style="font-size: 0.7em;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Header -->
+    <header class="mobile-header mobile-tablet-only">
+        <div class="mobile-header-container">
+            <div class="mobile-header-top">
+                <!-- Toggle Button -->
+                <button class="btn btn-outline-secondary sidebar-toggle" aria-label="Open menu" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <!-- Logo -->
+                <div class="mobile-logo">
+                    <img src="assets/logo.jpg" alt="CompareHubPrices" class="mobile-logo-img">
+                </div>
+            </div>
+            
+            <div class="mobile-header-bottom">
+                <!-- Search Input -->
+                <div class="mobile-search">
+                    <div class="input-group">
+                        <input type="text" id="mobileHeaderSearchInput" placeholder="Search..." class="form-control mobile-search-input">
+                        <button type="button" class="btn btn-danger search-btn" onclick="performMobileHeaderSearch()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <!-- Search Suggestions Dropdown -->
+                    <div class="mobile-search-suggestions" id="mobileHeaderSearchSuggestions">
+                        <div class="suggestions-content">
+                            <!-- Suggestions will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Modern Hero Carousel -->
+    <section class="hero-carousel-section">
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            
+            <div class="carousel-inner">
+                <!-- Slide 1 -->
+                <div class="carousel-item active">
+                    <div class="hero-slide hero-slide-1">
+                        <div class="hero-overlay"></div>
+                        <div class="container">
+                            <div class="row align-items-center min-vh-100">
+                                <div class="col-lg-6">
+                                    <div class="hero-content">
+                                        <h1 class="hero-title">Find the Best Deals on Electronics</h1>
+                                        <p class="hero-subtitle">Compare prices from 50+ retailers and save up to 30% on your favorite tech products</p>
+                                        <div class="hero-actions">
+                                            <button class="btn btn-primary btn-lg me-3">Start Shopping</button>
+                                            <button class="btn btn-outline-light btn-lg">Learn More</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 2 -->
+                <div class="carousel-item">
+                    <div class="hero-slide hero-slide-2">
+                        <div class="hero-overlay"></div>
+                        <div class="container">
+                            <div class="row align-items-center min-vh-100">
+                                <div class="col-lg-6">
+                                    <div class="hero-content">
+                                        <h1 class="hero-title">Smart Price Alerts</h1>
+                                        <p class="hero-subtitle">Never miss a deal again! Get instant notifications when prices drop on your wishlist items</p>
+                                        <div class="hero-actions">
+                                            <button class="btn btn-primary btn-lg me-3">Set Alerts</button>
+                                            <button class="btn btn-outline-light btn-lg">View Features</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 3 -->
+                <div class="carousel-item">
+                    <div class="hero-slide hero-slide-3">
+                        <div class="hero-overlay"></div>
+                        <div class="container">
+                            <div class="row align-items-center min-vh-100">
+                                <div class="col-lg-6">
+                                    <div class="hero-content">
+                                        <h1 class="hero-title">100% Free & Secure</h1>
+                                        <p class="hero-subtitle">No hidden fees, no subscriptions. Compare prices safely and securely with our trusted platform</p>
+                                        <div class="hero-actions">
+                                            <button class="btn btn-primary btn-lg me-3">Get Started</button>
+                                            <button class="btn btn-outline-light btn-lg">Why Trust Us</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Trending Deals Container -->
+    <div class="trending-deals-container">
+        <div class="section-header">
+            <h2 class="section-title">Trending Deals</h2>
+            <p class="section-subtitle">Don't miss out on these hot deals!</p>
+        </div>
+        <div class="trending-deals-showcase">
+            <!-- Trending deals will be populated here -->
+        </div>
+        <div class="slide-indicators-container">
+            <span class="slide-indicator active" data-slide="0"></span>
+            <span class="slide-indicator" data-slide="1"></span>
+            <span class="slide-indicator" data-slide="2"></span>
+            <span class="slide-indicator" data-slide="3"></span>
+        </div>
+    </div>
+
+    <!-- New Arrivals Container -->
+    <div class="new-arrivals-container">
+        <div class="section-header">
+            <h2 class="section-title">New Arrivals</h2>
+            <p class="section-subtitle">Discover the latest products just added to our platform</p>
+        </div>
+        <div class="new-arrivals-showcase">
+            <!-- New arrivals will be populated here -->
+        </div>
+    </div>
+
+    <!-- Quick Access Container -->
+    <div class="quick-access-container">
+        <div class="section-header">
+            <h2 class="section-title">Quick Access</h2>
+            <p class="section-subtitle">Everything you need in one place</p>
+        </div>
+        <div class="quick-access-grid">
+            <div class="quick-access-item">
+                <div class="access-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="access-content">
+                    <h3>Profile</h3>
+                    <p>Manage your account</p>
+                </div>
+            </div>
+            
+            <div class="quick-access-item">
+                <div class="access-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <div class="access-content">
+                    <h3>Essentials</h3>
+                    <p>Streamlined experience</p>
+                </div>
+            </div>
+            
+            <div class="quick-access-item">
+                <div class="access-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <div class="access-content">
+                    <h3>Price Alerts</h3>
+                    <p>Set up notifications</p>
+                </div>
+            </div>
+            
+            <div class="quick-access-item">
+                <div class="access-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="access-content">
+                    <h3>Wishlist</h3>
+                    <p>Save your favorites</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Local Business Services Container -->
+    <div class="local-business-services-container">
+        <div class="section-header">
+            <h2 class="section-title">Local Business Services</h2>
+            <p class="section-subtitle">Supporting local businesses in your community</p>
+        </div>
+        <div class="local-business-services-showcase">
+            <!-- Local business services will be populated here -->
+        </div>
+        <div class="slide-indicators-container">
+            <span class="slide-indicator active" data-slide="0"></span>
+            <span class="slide-indicator" data-slide="1"></span>
+            <span class="slide-indicator" data-slide="2"></span>
+            <span class="slide-indicator" data-slide="3"></span>
+        </div>
+    </div>
+
+    <!-- Ads Section -->
+    <section class="ads-section">
+        <div class="ads-container" id="googleAdsContainer2">
+            <!-- Google AdSense code would be inserted here -->
+            <div class="ad-placeholder">
+                <div class="ad-placeholder-text">
+                    <i class="fas fa-ad"></i>
+                    <span>Advertisement</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Categories -->
+    <div class="featured-categories-container">
+        <div class="section-header">
+            <h2 class="section-title">Featured Categories</h2>
+            <p class="section-subtitle">Discover the hottest deals in your favorite tech categories</p>
+        </div>
+        <div class="categories-showcase">
+            <div class="category-showcase-card appliances">
+                <div class="category-bg">
+                    <div class="category-info">
+                        <h3>Appliances</h3>
+                        <p>Kitchen, Home & Living Appliances</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="category-showcase-card laptops">
+                <div class="category-bg">
+                    <div class="category-info">
+                        <h3>Laptops</h3>
+                        <p>MacBook Pro, Dell XPS, Gaming Laptops</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="category-showcase-card gaming">
+                <div class="category-bg">
+                    <div class="category-info">
+                        <h3>Gaming Consoles</h3>
+                        <p>PS5, Xbox Series X, Gaming Accessories</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="category-showcase-card smartphones">
+                <div class="category-bg">
+                    <div class="category-info">
+                        <h3>Smartphones</h3>
+                        <p>iPhone, Samsung Galaxy, Latest Models</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="category-showcase-card televisions">
+                <div class="category-bg">
+                    <div class="category-info">
+                        <h3>Televisions</h3>
+                        <p>4K Smart TVs, OLED, LED Displays</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="category-showcase-card audio">
+                <div class="category-bg">
+                    <div class="category-info">
+                        <h3>Audio</h3>
+                        <p>Headphones, Speakers, Sound Systems</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Laptops Deals Container -->
+    <div class="laptops-deals-container">
+        <div class="section-header">
+            <h2 class="section-title">Laptops Deals</h2>
+            <p class="section-subtitle">Best laptop deals and price comparisons</p>
+        </div>
+        <div class="laptops-deals-showcase">
+            <!-- Laptops deals will be populated here -->
+        </div>
+    </div>
+
+    <!-- Smartphones Deals Container -->
+    <div class="smartphones-deals-container">
+        <div class="section-header">
+            <h2 class="section-title">Smartphones Deals</h2>
+            <p class="section-subtitle">Best smartphone deals and price comparisons</p>
+        </div>
+        <div class="smartphones-deals-showcase">
+            <!-- Smartphones deals will be populated here -->
+        </div>
+        <div class="slide-indicators-container">
+            <span class="slide-indicator active" data-slide="0"></span>
+            <span class="slide-indicator" data-slide="1"></span>
+            <span class="slide-indicator" data-slide="2"></span>
+            <span class="slide-indicator" data-slide="3"></span>
+        </div>
+    </div>
+
+    <!-- Appliances Deals Container -->
+    <div class="appliances-deals-container">
+        <div class="section-header">
+            <h2 class="section-title">Appliances Deals</h2>
+            <p class="section-subtitle">Best home and kitchen appliance deals</p>
+        </div>
+        <div class="appliances-deals-showcase">
+            <!-- Appliances deals will be populated here -->
+        </div>
+    </div>
+
+    <!-- Gaming Products Container -->
+    <div class="gaming-products-container">
+        <div class="section-header">
+            <h2 class="section-title">Gaming Products</h2>
+            <p class="section-subtitle">Best gaming deals and accessories</p>
+        </div>
+        <div class="gaming-products-showcase">
+            <!-- Gaming products will be populated here -->
+        </div>
+    </div>
+
+    <!-- Product Buying Guides Container -->
+    <div class="product-buying-guides-container">
+        <div class="section-header">
+            <h2 class="section-title">Product Buying Guides</h2>
+            <p class="section-subtitle">Expert guides to help you make informed purchasing decisions</p>
+        </div>
+        <div class="product-buying-guides-showcase">
+            <!-- Product buying guides will be populated here -->
+        </div>
+    </div>
+
+    <!-- Seasonal Deal Calendar Container -->
+    <div class="seasonal-deal-calendar-container">
+        <div class="section-header">
+            <h2 class="section-title">Seasonal Deal Calendar</h2>
+            <p class="section-subtitle">Never miss the best deals throughout the year</p>
+        </div>
+        <div class="seasonal-deal-calendar-showcase">
+            <!-- Seasonal deal calendar will be populated here -->
+        </div>
+    </div>
+
+    <!-- Latest Tech News & Reviews Container -->
+    <div class="latest-tech-news-reviews-container">
+        <div class="section-header">
+            <h2 class="section-title">Latest Tech News & Reviews</h2>
+            <p class="section-subtitle">Stay updated with the latest technology news and product reviews</p>
+        </div>
+        <div class="latest-tech-news-reviews-showcase">
+            <!-- Latest tech news and reviews will be populated here -->
+        </div>
+    </div>
+
+    <!-- Mobile/Tablet Sidebar -->
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <div class="sidebar-content p-0">
+            <!-- Welcome Header with Close Button -->
+            <div class="bg-danger text-white py-2 px-3 d-flex justify-content-between align-items-center">
+                <span class="small fw-bold">Welcome back to CompareHubPrices</span>
+                <button class="btn-close btn-close-white btn-sm" onclick="toggleSidebar()" aria-label="Close"></button>
+            </div>
+            
+            
+            <!-- LOGGED OUT STATE - Show this when user is not logged in -->
+            <div id="loggedOutState" class="px-3 py-2">
+                <button class="btn btn-danger w-100 d-flex justify-content-center align-items-center" onclick="toggleLoginState(); return false;">
+                    Login
+                </button>
+            </div>
+            
+            <!-- LOGGED IN STATE - Show this when user is logged in -->
+            <div id="loggedInState" style="display: none;">
+                <!-- User Profile Card -->
+                <div class="text-center py-4 bg-light">
+                    <div class="d-inline-flex justify-content-center align-items-center rounded-circle bg-danger text-white" style="width: 80px; height: 80px; font-size: 28px; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                        TE
+                    </div>
+                    <h5 class="mt-3 mb-1 fw-bold">Test</h5>
+                    <p class="text-muted mb-0">test@example.com</p>
+                </div>
+                
+                <!-- Sign Out Button -->
+                <div class="px-3 py-2">
+                    <button class="btn btn-danger w-100 d-flex justify-content-center align-items-center" onclick="showLogoutConfirmation(); return false;">
+                        Sign Out
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Visual Separator -->
+            <div class="mx-3 my-3">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
+                    <div class="mx-2">
+                        <i class="fas fa-circle" style="font-size: 8px; color: rgba(220, 53, 69, 0.8);"></i>
+                    </div>
+                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to left, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
+                </div>
+            </div>
+            
+            <div class="sidebar-section pt-0 px-3">
+                <h4>Quick Access</h4>
+                <div class="quick-access-grid">
+                    <a href="#new-arrivals" class="quick-access-item new-arrivals">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">New Arrivals</span>
+                            <span class="quick-access-subtitle">Latest products</span>
+                        </div>
+                        <div class="quick-access-badge new">NEW</div>
+                    </a>
+                    
+                    <a href="#notifications" class="quick-access-item notifications">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">Notifications</span>
+                            <span class="quick-access-subtitle">3 unread</span>
+                        </div>
+                        <div class="quick-access-badge count">3</div>
+                    </a>
+                    
+                    <a href="#local-business" class="quick-access-item local-business">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">Local Business</span>
+                            <span class="quick-access-subtitle">Near you</span>
+                        </div>
+                    </a>
+                    
+                    <a href="#profile" class="quick-access-item help">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-id-card"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">My Profile</span>
+                            <span class="quick-access-subtitle">View account</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <!-- Visual Separator -->
+            <div class="mx-3 my-3">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
+                    <div class="mx-2">
+                        <i class="fas fa-circle" style="font-size: 8px; color: rgba(220, 53, 69, 0.8);"></i>
+                    </div>
+                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to left, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <h4>Categories</h4>
+                <div class="category-search">
+                    <input type="text" placeholder="Search categories..." class="category-search-input" id="categorySearchInput">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <ul class="menu-items">
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span>Smartphones and Tablets</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="#smartphones">Smartphones</a></li>
+                            <li class="item"><a href="#tablets">Tablets</a></li>
+                            <li class="item"><a href="#accessories">Mobile Accessories</a></li>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span>Wearables Devices</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="#smartwatches">Smartwatches</a></li>
+                            <li class="item"><a href="#fitness-trackers">Fitness Trackers</a></li>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span>Laptops and Accessories</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="#laptops">Windows Laptops</a></li>
+                            <li class="item"><a href="#desktops">Macbooks</a></li>
+                            <li class="item"><a href="#monitors">Chromebooks</a></li>
+                            <li class="item"><a href="#keyboards">Accessories</a></li>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span>Televisions & Streaming Devices</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="#televisions">Televisions</a></li>
+                            <li class="item"><a href="#streaming">Streaming Devices</a></li>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span>Audio</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="#earbuds">Earbuds</a></li>
+                            <li class="item"><a href="#headphones">Headphones</a></li>
+                            <li class="item"><a href="#speakers">Bluetooth Speakers</a></li>
+                            <li class="item"><a href="#party-speakers">Party Speakers</a></li>
+                            <li class="item"><a href="#soundbars">Soundbars</a></li>
+                            <li class="item"><a href="#hifi">Hi-fi Systems</a></li>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span>Gaming</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="#consoles">Gaming Consoles</a></li>
+                            <li class="item"><a href="#controllers">Controllers</a></li>
+                            <li class="item"><a href="#gaming-accessories">Gaming Accessories</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <!-- User Sidebar (shown after login) -->
+    <div class="offcanvas offcanvas-end" id="userSidebar" tabindex="-1">
+        <div class="offcanvas-header bg-danger text-white position-relative overflow-hidden">
+            <div class="d-flex align-items-center">
+                <div>
+                    <h6 class="mb-0 fw-bold">Welcome back to CompareHubPrices</h6>
+                </div>
+            </div>
+            <button type="button" class="btn-close btn-close-white" id="userSidebarClose" data-bs-dismiss="offcanvas"></button>
+        </div>
+        
+        <div class="offcanvas-body p-0 d-flex flex-column">
+            <!-- User Profile Section -->
+            <div class="bg-light p-4 text-center border-bottom">
+                <div class="position-relative d-inline-block mb-3">
+                    <div class="bg-danger rounded-circle d-flex align-items-center justify-content-center shadow-lg" 
+                         style="width: 100px; height: 100px;" id="userAvatar">
+                        <span class="text-white fw-bold fs-3" id="userInitials">JD</span>
+                    </div>
+                </div>
+                <h5 class="fw-bold text-dark mb-1" id="userName">John Doe</h5>
+                <p class="text-muted mb-2" id="userEmail">john.doe@example.com</p>
+            </div>
+            
+            <!-- Quick Access Section -->
+            <div class="sidebar-header">
+                <h3>Quick Access</h3>
+            </div>
+            <div class="sidebar-content">
+                <div class="sidebar-section">
+                    <div class="quick-access-grid">
+                    <a href="#new-arrivals" class="quick-access-item new-arrivals" onclick="closeUserSidebar(); return false;">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">New Arrivals</span>
+                            <span class="quick-access-subtitle">Latest products</span>
+                        </div>
+                        <div class="quick-access-badge new">NEW</div>
+                    </a>
+                    
+                    <a href="#notifications" class="quick-access-item notifications" onclick="closeUserSidebar(); return false;">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">Notifications</span>
+                            <span class="quick-access-subtitle">3 unread</span>
+                        </div>
+                        <div class="quick-access-badge count">3</div>
+                    </a>
+                    
+                    <a href="#local-business" class="quick-access-item local-business" onclick="closeUserSidebar(); return false;">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">Local Business</span>
+                            <span class="quick-access-subtitle">Near you</span>
+                        </div>
+                    </a>
+                    
+                    <a href="#my-profile" class="quick-access-item help" onclick="closeUserSidebar(); return false;">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-id-card"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">My Profile</span>
+                            <span class="quick-access-subtitle">View account</span>
+                        </div>
+                    </a>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <!-- Logout Section -->
+            <div class="p-3 border-top">
+                <button class="btn btn-danger btn-lg w-100 d-flex align-items-center justify-content-center p-3 rounded-3" 
+                        onclick="handleLogout(); return false;">
+                    <i class="fas fa-sign-out-alt me-2"></i>
+                    <span class="fw-bold">Sign Out</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+
+
+   
+
+
+
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About CompareHubPrices</h3>
+                <ul>
+                    <li><a href="about-us.html">About Us</a></li>
+                    <li><a href="articles.html">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Help & Support</h3>
+                <ul>
+                    <li><a href="contact-us.html">Contact Us</a></li>
+                    <li><a href="FAQs.html">FAQs</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="Terms-of-Service.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
+                <div class="newsletter-section">
+                    <h4>Get the Best Deals in Your Inbox</h4>
+                    <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                        <input type="email" placeholder="Enter your email address" required aria-label="Email address for newsletter">
+                        <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CompareHub Prices. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Logout Confirmation Modal (Bootstrap Modal) -->
+    <div class="modal fade" id="logoutConfirmModal" tabindex="-1" aria-labelledby="logoutConfirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white justify-content-center position-relative">
+                    <h5 class="modal-title text-center w-100" id="logoutConfirmModalLabel">Sign Out Confirmation</h5>
+                    <button type="button" class="btn-close btn-close-white position-absolute" style="right: 15px; top: 15px;" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center p-4">
+                    <div class="mb-4">
+                        <i class="fas fa-exclamation-circle text-danger" style="font-size: 48px;"></i>
+                    </div>
+                    <h5 class="mb-3">Are you sure you want to sign out?</h5>
+                    <p class="text-muted mb-4">You will need to sign in again to access your account.</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger px-4" id="confirmLogoutBtn">Sign Out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Guide Modal -->
+    <div id="guideModal" class="guide-modal" style="display: none;">
+        <div class="guide-modal-content">
+            <div class="guide-modal-header">
+                <div class="guide-modal-meta">
+                    <span id="modalCategory" class="guide-category-badge"></span>
+                    <span id="modalDateText" class="guide-date"></span>
+                </div>
+                <button id="guideModalClose" class="guide-modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="guide-modal-body">
+                <h1 id="modalTitle" class="guide-modal-title"></h1>
+                <div id="modalContent" class="guide-modal-content-text"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Article Modal -->
+    <div id="articleModal" class="guide-modal" style="display: none;">
+        <div class="guide-modal-content">
+            <div class="guide-modal-header">
+                <div class="guide-modal-meta">
+                    <span id="modalCategory" class="guide-category-badge"></span>
+                    <span id="modalDateText" class="guide-date"></span>
+                    <span id="modalTypeText" class="guide-type-badge"></span>
+                </div>
+                <button id="articleModalClose" class="guide-modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="guide-modal-body">
+                <h1 id="modalTitle" class="guide-modal-title"></h1>
+                <div id="modalContent" class="guide-modal-content-text"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/scripts/device-detection.js"></script>
+    <script src="assets/scripts/script.js"></script>
+    <script src="assets/scripts/search.js"></script>
+    <script src="assets/scripts/sidebar-header.js"></script>
+    <script src="assets/scripts/sidebar-mobile.js"></script>
+ 
+  
+    <script src="assets/scripts/chatbox.js"></script>
+ 
+    <script src="assets/scripts/seasonal-deal-calendar.js"></script>
+    <script src="assets/scripts/buying-guides.js"></script>
+    <script src="assets/scripts/articles.js"></script>
+    <script src="assets/scripts/index.js"></script>
+    
+    <!-- Load Local Business Services -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load local business cards into the showcase
+            loadLocalBusinessServices();
+            
+            // Load seasonal deal calendar
+            loadSeasonalDealCalendar();
+        });
+        
+        // Local Business Services with pagination
+        let allBusinesses = [];
+        let currentBusinessSlide = 0;
+        let businessAutoPlayTimer = null;
+
+        function loadLocalBusinessServices() {
+            const showcase = document.querySelector('.local-business-services-showcase');
+            if (!showcase) return;
+            
+            // Get all businesses and shuffle them
+            allBusinesses = getRandomizedBusinessCards(50); // Get more businesses for pagination
+            
+            // Show first set of 3 businesses
+            showBusinessSlide(0);
+            
+            // Setup slide indicators
+            setupBusinessSlideIndicators();
+            
+            // Start auto-play timer (16 seconds)
+            startBusinessAutoPlay();
+        }
+
+        function showBusinessSlide(slideIndex) {
+            const showcase = document.querySelector('.local-business-services-showcase');
+            if (!showcase || !allBusinesses) return;
+
+            // Calculate the start index for this slide (3 cards per slide)
+            const startIndex = slideIndex * 3;
+            const endIndex = startIndex + 3;
+            
+            // Get the businesses for this slide
+            const businessesToShow = allBusinesses.slice(startIndex, endIndex);
+            
+            // If we don't have enough businesses for this slide, show what we have
+            if (businessesToShow.length === 0) {
+                showcase.innerHTML = `
+                    <div class="no-more-businesses">
+                        <i class="fas fa-store fa-3x mb-3"></i>
+                        <h4>No more businesses available</h4>
+                        <p>Check back later for new local businesses!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Render the businesses for this slide
+            showcase.innerHTML = businessesToShow.map(business => `
+                <div class="local-business-card">
+                    <a href="local-business.html?business=${business.id}&openModal=true" class="text-decoration-none">
+                        <div class="business-card-image-container">
+                            <img src="${business.image}" 
+                                 alt="${business.name}" 
+                                 class="business-card-image" 
+                                 loading="lazy">
+                            <div class="business-card-overlay">
+                                <div class="business-rating">
+                                    <div class="rating-stars">
+                                        ${renderStarsHTML(business.rating)}
+                                    </div>
+                                    <span class="rating-text">${business.rating}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="business-card-content">
+                            <div class="business-category">${business.category}</div>
+                            <h3 class="business-name">${business.name}</h3>
+                            <p class="business-description">${business.description}</p>
+                            <div class="business-meta">
+                                <div class="business-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>${business.location.split(',')[0]}</span>
+                                </div>
+                                <div class="business-distance">
+                                    <i class="fas fa-route"></i>
+                                    <span>${business.distance} km</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            `).join('');
+            
+            // Update current slide
+            currentBusinessSlide = slideIndex;
+        }
+
+        function setupBusinessSlideIndicators() {
+            const indicators = document.querySelectorAll('.local-business-services-container .slide-indicator');
+            
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    // Stop auto-play when user manually clicks
+                    stopBusinessAutoPlay();
+                    
+                    // Remove active class from all indicators
+                    indicators.forEach(ind => ind.classList.remove('active'));
+                    
+                    // Add active class to clicked indicator
+                    indicator.classList.add('active');
+                    
+                    // Add bounce effect
+                    indicator.style.transform = 'scale(1.3)';
+                    setTimeout(() => {
+                        indicator.style.transform = 'scale(1.1)';
+                    }, 150);
+                    
+                    // Show the corresponding slide
+                    showBusinessSlide(index);
+                    
+                    console.log(`Local Business: Switched to slide ${index + 1}`);
+                    
+                    // Restart auto-play after manual interaction
+                    startBusinessAutoPlay();
+                });
+            });
+        }
+
+        function startBusinessAutoPlay() {
+            // Clear any existing timer
+            stopBusinessAutoPlay();
+            
+            // Set timer for 16 seconds
+            businessAutoPlayTimer = setInterval(() => {
+                nextBusinessSlide();
+            }, 16000); // 16 seconds
+        }
+
+        function stopBusinessAutoPlay() {
+            if (businessAutoPlayTimer) {
+                clearInterval(businessAutoPlayTimer);
+                businessAutoPlayTimer = null;
+            }
+        }
+
+        function nextBusinessSlide() {
+            const indicators = document.querySelectorAll('.local-business-services-container .slide-indicator');
+            const totalSlides = indicators.length;
+            
+            // Move to next slide
+            currentBusinessSlide = (currentBusinessSlide + 1) % totalSlides;
+            
+            // Update indicators
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentBusinessSlide);
+            });
+            
+            // Show the slide
+            showBusinessSlide(currentBusinessSlide);
+            
+            console.log(`Local Business: Auto-advanced to slide ${currentBusinessSlide + 1}`);
+        }
+        
+        // Helper function to render stars (reusing from local-business.js)
+        function renderStarsHTML(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+            
+            let starsHTML = '';
+            
+            // Full stars
+            for (let i = 0; i < fullStars; i++) {
+                starsHTML += '<i class="fas fa-star"></i>';
+            }
+            
+            // Half star
+            if (hasHalfStar) {
+                starsHTML += '<i class="fas fa-star-half-alt"></i>';
+            }
+            
+            // Empty stars
+            for (let i = 0; i < emptyStars; i++) {
+                starsHTML += '<i class="far fa-star"></i>';
+            }
+            
+            return starsHTML;
+        }
+        
+        function loadSeasonalDealCalendar() {
+            console.log('loadSeasonalDealCalendar function called');
+            
+            const showcase = document.querySelector('.seasonal-deal-calendar-showcase');
+            console.log('Showcase element:', showcase);
+            
+            if (!showcase) {
+                console.error('Seasonal deal calendar showcase not found');
+                return;
+            }
+            
+            console.log('Loading seasonal deals...');
+            
+            // Test with simple content first
+            showcase.innerHTML = '<div style="padding: 20px; background: #f0f0f0; border: 2px solid #007bff; text-align: center;"><h3>Seasonal Deal Calendar Test</h3><p>If you can see this, the JavaScript is working!</p></div>';
+            
+            // Wait a moment then load the actual content
+            setTimeout(() => {
+                loadSeasonalDealsFallback();
+            }, 1000);
+        }
+        
+        function loadSeasonalDealsFallback() {
+            console.log('loadSeasonalDealsFallback function called');
+            
+            const showcase = document.querySelector('.seasonal-deal-calendar-showcase');
+            console.log('Showcase in fallback:', showcase);
+            
+            if (!showcase) {
+                console.error('Showcase not found in fallback');
+                return;
+            }
+            
+            const deals = [
+                {
+                    month: 'Jun',
+                    day: '16',
+                    title: "Father's Day Deals",
+                    description: "Gaming, tools, and gadgets perfect for dads",
+                    categories: ['Gaming', 'Tools', 'Gadgets'],
+                    gradient: 'linear-gradient(135deg, #2c3e50 0%, #34495e 100%)'
+                },
+                {
+                    month: 'Jan',
+                    day: '3',
+                    title: "Back to School",
+                    description: "Laptops, tablets, and accessories for students",
+                    categories: ['Laptops', 'Tablets', 'Accessories'],
+                    gradient: 'linear-gradient(135deg, #007bff 0%, #0056b3 100%)'
+                },
+                {
+                    month: 'Nov',
+                    day: '24',
+                    title: "Black Friday",
+                    description: "The biggest shopping day of the year - incredible deals everywhere",
+                    categories: ['All Categories'],
+                    gradient: 'linear-gradient(135deg, #dc3545 0%, #c82333 100%)'
+                },
+                {
+                    month: 'Feb',
+                    day: '14',
+                    title: "Valentine's Day Specials",
+                    description: "Gift deals on audio, wearables, and smart home devices",
+                    categories: ['Audio', 'Wearables', 'Smart Home'],
+                    gradient: 'linear-gradient(135deg, #e83e8c 0%, #d63384 100%)'
+                }
+            ];
+            
+            const htmlContent = deals.map(deal => `
+                <div class="seasonal-deal-item">
+                    <div class="deal-date-badge" style="background: ${deal.gradient}">
+                        <div class="deal-month">${deal.month}</div>
+                        <div class="deal-day">${deal.day}</div>
+                    </div>
+                    <div class="deal-details">
+                        <h4 class="deal-title">${deal.title}</h4>
+                        <p class="deal-description">${deal.description}</p>
+                        <div class="deal-categories">
+                            ${deal.categories.map(category => `
+                                <span class="deal-category-tag">${category}</span>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            console.log('HTML content to insert:', htmlContent);
+            
+            showcase.innerHTML = htmlContent;
+            
+            console.log('Showcase innerHTML after insertion:', showcase.innerHTML);
+            console.log('Fallback seasonal deals loaded');
+        }
+    </script>
+  
+    
+ 
+    
+</body>
+</html>

@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompareHubPrices - Compare Prices Across Categories</title>
+
+    <!-- CSP Meta Tag for Turnstile - Must be early -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://accounts.google.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; frame-src 'self' https://challenges.cloudflare.com https://accounts.google.com; connect-src 'self' https://da84s1s15g.execute-api.af-south-1.amazonaws.com https://api.resend.com https://cdn.jsdelivr.net; object-src 'none'; base-uri 'self'; form-action 'self';">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <script src="assets/scripts/turnstile-config.js"></script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  
+
+    <link rel="stylesheet" href="assets/css/styles.css">
+
+    <link rel="stylesheet" href="assets/css/sidebar.css">
+  
+   
+    
+    <!-- Header Navigation Font -->
+    <style>
+        .notification-buttons .header-link,
+        .categories-dropdown .header-link {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+    </style>
+
+      <link rel="stylesheet" href="assets/css/footer.css">
+      <link rel="stylesheet" href="assets/css/notifications.css">
+      <link rel="stylesheet" href="assets/css/terms-of-services.css">
+      
+  
+    
+
+    
+</head>
+<body>
+    <!-- Desktop Header -->
+    <header class="header desktop-only">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <!-- Mobile Toggle Button - Left Corner -->
+                <div class="col-auto mobile-tablet-only">
+                    <button class="sidebar-toggle" aria-label="Open menu">☰</button>
+                </div>
+                
+                <div class="col-auto">
+                    <div class="logo">
+                        <img src="assets/logo.jpg" alt="CompareHubPrices" class="logo-img">
+                    </div>
+                </div>
+                
+                <!-- Categories Dropdown - Desktop Only -->
+                <div class="col-auto desktop-only">
+                    <div class="categories-dropdown">
+                        <a href="#categories" class="header-link">Categories <i class="fas fa-chevron-down" style="font-size: 0.7em;"></i></a>
+                        <div class="categories-menu">
+                            <div class="categories-column">
+                                <h4>Product Categories</h4>
+                                <a href="#smartphones-tablets" class="category-item" data-category="smartphones-tablets">
+                                    Smartphones and Tablets
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#laptops-accessories" class="category-item" data-category="laptops-accessories">
+                                    Laptops and Accessories
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#wearables" class="category-item" data-category="wearables">
+                                    Wearables Devices
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#televisions" class="category-item" data-category="televisions">
+                                    Televisions & Streaming Devices
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#audio" class="category-item" data-category="audio">
+                                    Audio
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#gaming" class="category-item" data-category="gaming">
+                                    Gaming
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#networking" class="category-item" data-category="networking">
+                                    Wi-Fi & Networking
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#appliances" class="category-item" data-category="appliances">
+                                    Appliances
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </div>
+                            <div class="categories-column subcategories-column" id="subcategories-column">
+                                <h4 id="subcategory-title">Select a category</h4>
+                                <div id="subcategory-content">
+                                    <p>Hover over a category to see subcategories</p>
+                                </div>
+                            </div>
+                            <div class="categories-column sub-subcategories-column" id="sub-subcategories-column">
+                                <h4 id="sub-subcategory-title">Select a subcategory</h4>
+                                <div id="sub-subcategory-content">
+                                    <p>Hover over a subcategory to see more options</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Header Search -->
+                <div class="col-auto desktop-only">
+                    <div class="header-search">
+                        <div class="search-wrapper">
+                            <div class="input-group" style="width: 350px;">
+                                <input type="text" id="headerSearchInput" placeholder="Search..." class="form-control search-input">
+                                <button type="button" class="btn btn-danger search-btn" onclick="performHeaderSearch()">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                            <!-- Desktop Search Suggestions Dropdown -->
+                            <div class="search-suggestions" id="headerSearchSuggestions">
+                                <div class="suggestions-content">
+                                    <!-- Suggestions will be populated here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Notification Buttons - Desktop Only -->
+                <div class="col-auto desktop-only">
+                    <div class="notification-buttons">
+                        <a href="#new-arrivals" class="header-link" onclick="showNewArrivals(); return false;">New Arrivals</a>
+                        <a href="#notifications" class="header-link" onclick="showNotifications(); return false;">Notifications</a>
+                        <a href="#local-business" class="header-link" onclick="showLocalBusiness(); return false;">Local Business</a>
+                        <div class="login-dropdown-container">
+                            <a href="#" class="header-link" id="desktopLoginBtn" onclick="toggleLoginState(); return false;">
+                                Login <i class="fas fa-chevron-down" style="font-size: 0.7em;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Header -->
+    <header class="mobile-header mobile-tablet-only">
+        <div class="mobile-header-container">
+            <div class="mobile-header-top">
+                <!-- Toggle Button -->
+                <button class="btn btn-outline-secondary sidebar-toggle" aria-label="Open menu" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <!-- Logo -->
+                <div class="mobile-logo">
+                    <img src="assets/logo.jpg" alt="CompareHubPrices" class="mobile-logo-img">
+                </div>
+            </div>
+            
+            <div class="mobile-header-bottom">
+                <!-- Search Input -->
+                <div class="mobile-search">
+                    <div class="input-group">
+                        <input type="text" id="mobileHeaderSearchInput" placeholder="Search..." class="form-control mobile-search-input">
+                        <button type="button" class="btn btn-danger search-btn" onclick="performMobileHeaderSearch()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <!-- Search Suggestions Dropdown -->
+                    <div class="mobile-search-suggestions" id="mobileHeaderSearchSuggestions">
+                        <div class="suggestions-content">
+                            <!-- Suggestions will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile/Tablet Sidebar -->
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <div class="sidebar-content p-0">
+            <!-- Welcome Header with Close Button -->
+            <div class="bg-danger text-white py-2 px-3 d-flex justify-content-between align-items-center">
+                <span class="small fw-bold">Welcome back to CompareHubPrices</span>
+                <button class="btn-close btn-close-white btn-sm" onclick="toggleSidebar()" aria-label="Close"></button>
+            </div>
+            
+            
+            <!-- LOGGED OUT STATE - Show this when user is not logged in -->
+            <div id="loggedOutState" class="px-3 py-2">
+                <button class="btn btn-danger w-100 d-flex justify-content-center align-items-center" onclick="toggleLoginState(); return false;">
+                    Login
+                </button>
+            </div>
+            
+            <!-- LOGGED IN STATE - Show this when user is logged in -->
+            <div id="loggedInState" style="display: none;">
+                <!-- User Profile Card -->
+                <div class="text-center py-4 bg-light">
+                    <div class="d-inline-flex justify-content-center align-items-center rounded-circle bg-danger text-white" style="width: 80px; height: 80px; font-size: 28px; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                        TE
+                    </div>
+                    <h5 class="mt-3 mb-1 fw-bold">Test</h5>
+                    <p class="text-muted mb-0">test@example.com</p>
+                </div>
+                
+                <!-- Sign Out Button -->
+                <div class="px-3 py-2">
+                    <button class="btn btn-danger w-100 d-flex justify-content-center align-items-center" onclick="showLogoutConfirmation(); return false;">
+                        Sign Out
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Visual Separator -->
+            <div class="mx-3 my-3">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
+                    <div class="mx-2">
+                        <i class="fas fa-circle" style="font-size: 8px; color: rgba(220, 53, 69, 0.8);"></i>
+                    </div>
+                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to left, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
+                </div>
+            </div>
+            
+            <div class="sidebar-section pt-0 px-3">
+                <h4>Quick Access</h4>
+                <div class="quick-access-grid">
+                    <a href="#new-arrivals" class="quick-access-item new-arrivals">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">New Arrivals</span>
+                            <span class="quick-access-subtitle">Latest products</span>
+                        </div>
+                        <div class="quick-access-badge new">NEW</div>
+                    </a>
+                    
+                    <a href="#notifications" class="quick-access-item notifications">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">Notifications</span>
+                            <span class="quick-access-subtitle">3 unread</span>
+                        </div>
+                        <div class="quick-access-badge count">3</div>
+                    </a>
+                    
+                    <a href="#local-business" class="quick-access-item local-business">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">Local Business</span>
+                            <span class="quick-access-subtitle">Near you</span>
+                        </div>
+                    </a>
+                    
+                    <a href="#profile" class="quick-access-item help">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-id-card"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">My Profile</span>
+                            <span class="quick-access-subtitle">View account</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <!-- Visual Separator -->
+            <div class="mx-3 my-3">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
+                    <div class="mx-2">
+                        <i class="fas fa-circle" style="font-size: 8px; color: rgba(220, 53, 69, 0.8);"></i>
+                    </div>
+                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to left, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <h4>Categories</h4>
+                <div class="category-search">
+                    <input type="text" placeholder="Search categories..." class="category-search-input" id="categorySearchInput">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <ul class="menu-items">
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span>Smartphones and Tablets</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="#smartphones">Smartphones</a></li>
+                            <li class="item"><a href="#tablets">Tablets</a></li>
+                            <li class="item"><a href="#accessories">Mobile Accessories</a></li>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span>Wearables Devices</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="#smartwatches">Smartwatches</a></li>
+                            <li class="item"><a href="#fitness-trackers">Fitness Trackers</a></li>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span>Laptops and Accessories</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="#laptops">Windows Laptops</a></li>
+                            <li class="item"><a href="#desktops">Macbooks</a></li>
+                            <li class="item"><a href="#monitors">Chromebooks</a></li>
+                            <li class="item"><a href="#keyboards">Accessories</a></li>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span>Televisions & Streaming Devices</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="#televisions">Televisions</a></li>
+                            <li class="item"><a href="#streaming">Streaming Devices</a></li>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span>Audio</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="#earbuds">Earbuds</a></li>
+                            <li class="item"><a href="#headphones">Headphones</a></li>
+                            <li class="item"><a href="#speakers">Bluetooth Speakers</a></li>
+                            <li class="item"><a href="#party-speakers">Party Speakers</a></li>
+                            <li class="item"><a href="#soundbars">Soundbars</a></li>
+                            <li class="item"><a href="#hifi">Hi-fi Systems</a></li>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span>Gaming</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="#consoles">Gaming Consoles</a></li>
+                            <li class="item"><a href="#controllers">Controllers</a></li>
+                            <li class="item"><a href="#gaming-accessories">Gaming Accessories</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <!-- User Sidebar (shown after login) -->
+    <div class="offcanvas offcanvas-end" id="userSidebar" tabindex="-1">
+        <div class="offcanvas-header bg-danger text-white position-relative overflow-hidden">
+            <div class="d-flex align-items-center">
+                <div>
+                    <h6 class="mb-0 fw-bold">Welcome back to CompareHubPrices</h6>
+                </div>
+            </div>
+            <button type="button" class="btn-close btn-close-white" id="userSidebarClose" data-bs-dismiss="offcanvas"></button>
+        </div>
+        
+        <div class="offcanvas-body p-0 d-flex flex-column">
+            <!-- User Profile Section -->
+            <div class="bg-light p-4 text-center border-bottom">
+                <div class="position-relative d-inline-block mb-3">
+                    <div class="bg-danger rounded-circle d-flex align-items-center justify-content-center shadow-lg" 
+                         style="width: 100px; height: 100px;" id="userAvatar">
+                        <span class="text-white fw-bold fs-3" id="userInitials">JD</span>
+                    </div>
+                </div>
+                <h5 class="fw-bold text-dark mb-1" id="userName">John Doe</h5>
+                <p class="text-muted mb-2" id="userEmail">john.doe@example.com</p>
+            </div>
+            
+            <!-- Quick Access Section -->
+            <div class="sidebar-header">
+                <h3>Quick Access</h3>
+            </div>
+            <div class="sidebar-content">
+                <div class="sidebar-section">
+                    <div class="quick-access-grid">
+                    <a href="#new-arrivals" class="quick-access-item new-arrivals" onclick="closeUserSidebar(); return false;">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">New Arrivals</span>
+                            <span class="quick-access-subtitle">Latest products</span>
+                        </div>
+                        <div class="quick-access-badge new">NEW</div>
+                    </a>
+                    
+                    <a href="#notifications" class="quick-access-item notifications" onclick="closeUserSidebar(); return false;">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">Notifications</span>
+                            <span class="quick-access-subtitle">3 unread</span>
+                        </div>
+                        <div class="quick-access-badge count">3</div>
+                    </a>
+                    
+                    <a href="#local-business" class="quick-access-item local-business" onclick="closeUserSidebar(); return false;">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">Local Business</span>
+                            <span class="quick-access-subtitle">Near you</span>
+                        </div>
+                    </a>
+                    
+                    <a href="#my-profile" class="quick-access-item help" onclick="closeUserSidebar(); return false;">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-id-card"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">My Profile</span>
+                            <span class="quick-access-subtitle">View account</span>
+                        </div>
+                    </a>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <!-- Logout Section -->
+            <div class="p-3 border-top">
+                <button class="btn btn-danger btn-lg w-100 d-flex align-items-center justify-content-center p-3 rounded-3" 
+                        onclick="handleLogout(); return false;">
+                    <i class="fas fa-sign-out-alt me-2"></i>
+                    <span class="fw-bold">Sign Out</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+
+
+   
+
+
+    <main class="main">
+        <!-- Terms of Service Hero Section -->
+        <div class="terms-hero">
+            <div class="hero-background"></div>
+            <div class="hero-content">
+                <div class="terms-card">
+                    <div class="terms-icon-large">
+                        <div class="icon-ring">
+                            <div class="icon-inner">
+                                <i class="fas fa-file-contract"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="terms-details">
+                        <h1 class="terms-title">Terms of Service</h1>
+                        <p class="terms-subtitle">Welcome to CompareHub! These terms govern your use of our price comparison platform. Please read them carefully before using our services.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Terms of Service Container -->
+        <div class="terms-container">
+            <div class="terms-content">
+                <!-- Breadcrumb -->
+                <nav class="breadcrumb-nav" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="index.html">Home</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Terms of Service
+                        </li>
+                    </ol>
+                </nav>
+
+                <!-- Quick Navigation -->
+                <div class="quick-nav-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-compass"></i>
+                        Quick Navigation
+                    </h3>
+                    <div class="quick-nav-grid">
+                        <a href="#acceptance" class="quick-nav-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Acceptance</span>
+                        </a>
+                        <a href="#service-description" class="quick-nav-item">
+                            <i class="fas fa-info-circle"></i>
+                            <span>Service Description</span>
+                        </a>
+                        <a href="#user-accounts" class="quick-nav-item">
+                            <i class="fas fa-user"></i>
+                            <span>User Accounts</span>
+                        </a>
+                        <a href="#privacy-policy" class="quick-nav-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Privacy Policy</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Table of Contents -->
+                <div class="content-section" id="table-of-contents">
+                    <h3 class="section-title">
+                        <i class="fas fa-list"></i>
+                        Table of Contents
+                    </h3>
+                    <div class="content-card">
+                        <div class="toc-grid">
+                            <div class="toc-item">
+                                <a href="#acceptance" class="toc-link">1. Acceptance of Terms</a>
+                            </div>
+                            <div class="toc-item">
+                                <a href="#service-description" class="toc-link">2. Service Description</a>
+                            </div>
+                            <div class="toc-item">
+                                <a href="#user-accounts" class="toc-link">3. User Accounts</a>
+                            </div>
+                            <div class="toc-item">
+                                <a href="#acceptable-use" class="toc-link">4. Acceptable Use</a>
+                            </div>
+                            <div class="toc-item">
+                                <a href="#privacy-policy" class="toc-link">5. Privacy Policy</a>
+                            </div>
+                            <div class="toc-item">
+                                <a href="#intellectual-property" class="toc-link">6. Intellectual Property</a>
+                            </div>
+                            <div class="toc-item">
+                                <a href="#third-party-services" class="toc-link">7. Third-Party Services</a>
+                            </div>
+                            <div class="toc-item">
+                                <a href="#disclaimers" class="toc-link">8. Disclaimers</a>
+                            </div>
+                            <div class="toc-item">
+                                <a href="#termination" class="toc-link">9. Termination</a>
+                            </div>
+                            <div class="toc-item">
+                                <a href="#governing-law" class="toc-link">10. Governing Law</a>
+                            </div>
+                            <div class="toc-item">
+                                <a href="#changes-to-terms" class="toc-link">11. Changes to Terms</a>
+                            </div>
+                            <div class="toc-item">
+                                <a href="#contact-information" class="toc-link">12. Contact Information</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 1. Acceptance of Terms -->
+                <div class="content-section" id="acceptance">
+                    <h3 class="section-title">
+                        <i class="fas fa-check-circle"></i>
+                        1. Acceptance of Terms
+                    </h3>
+                    <div class="content-card">
+                        <p class="content-text">By accessing and using CompareHub ("the Service"), you accept and agree to be bound by the terms and provisions of this agreement. If you do not agree to abide by the above, please do not use this service.</p>
+                        
+                        <div class="highlight-box">
+                            <p class="highlight-text"><strong>Important:</strong> These terms constitute a legally binding agreement between you and CompareHub. Please read them carefully.</p>
+                        </div>
+                        
+                        <p class="content-text">Your use of our service constitutes acceptance of these terms, regardless of whether you create an account or use our services as a guest.</p>
+                        
+                        <p class="content-text"><strong>Last Updated:</strong> January 15, 2025</p>
+                    </div>
+                </div>
+
+                <!-- 2. Description of Service -->
+                <div class="content-section" id="service-description">
+                    <h3 class="section-title">
+                        <i class="fas fa-info-circle"></i>
+                        2. Description of Service
+                    </h3>
+                    <div class="content-card">
+                        <p class="content-text">CompareHub is a comprehensive price comparison platform that empowers users to make informed purchasing decisions by providing:</p>
+                        
+                        <div class="features-grid">
+                            <div class="feature-item">
+                                <i class="fas fa-search-dollar"></i>
+                                <span>Real-time price comparisons across multiple retailers</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-filter"></i>
+                                <span>Advanced product search and filtering capabilities</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-list-alt"></i>
+                                <span>Detailed product specifications and reviews</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-heart"></i>
+                                <span>Personalized wishlist and favorites management</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-bell"></i>
+                                <span>Price drop alerts and notifications</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-tags"></i>
+                                <span>Deal recommendations and trending products</span>
+                            </div>
+                        </div>
+                        
+                        <div class="info-box">
+                            <p class="info-text"><strong>Service Availability:</strong> We strive to provide accurate and up-to-date information, but we cannot guarantee the accuracy of all product information, prices, or availability at all times.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. User Accounts -->
+                <div class="content-section" id="user-accounts">
+                    <h3 class="section-title">
+                        <i class="fas fa-user"></i>
+                        3. User Accounts
+                    </h3>
+                    <div class="content-card">
+                        <p class="content-text">To access certain premium features of our service, you may be required to create an account. When creating an account, you agree to:</p>
+                        
+                        <div class="requirements-list">
+                            <div class="requirement-item">
+                                <i class="fas fa-check"></i>
+                                <span>Provide accurate, current, and complete information during registration</span>
+                            </div>
+                            <div class="requirement-item">
+                                <i class="fas fa-check"></i>
+                                <span>Maintain and promptly update your account information</span>
+                            </div>
+                            <div class="requirement-item">
+                                <i class="fas fa-check"></i>
+                                <span>Maintain the security and confidentiality of your password</span>
+                            </div>
+                            <div class="requirement-item">
+                                <i class="fas fa-check"></i>
+                                <span>Accept responsibility for all activities under your account</span>
+                            </div>
+                            <div class="requirement-item">
+                                <i class="fas fa-check"></i>
+                                <span>Notify us immediately of any unauthorized use or security breach</span>
+                            </div>
+                        </div>
+                        
+                        <p class="content-text">You are solely responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account.</p>
+                        
+                        <div class="warning-box">
+                            <p class="warning-text"><strong>Account Security:</strong> Never share your login credentials with others. CompareHub will never ask for your password via email or phone.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Acceptable Use -->
+                <div class="content-section" id="acceptable-use">
+                    <h3 class="section-title">
+                        <i class="fas fa-shield-alt"></i>
+                        4. Acceptable Use
+                    </h3>
+                    <div class="content-card">
+                        <p class="content-text">When using our service, you agree not to:</p>
+                        
+                        <div class="prohibited-list">
+                            <div class="prohibited-item">
+                                <i class="fas fa-times"></i>
+                                <span>Use the service for any illegal purpose or in violation of any laws</span>
+                            </div>
+                            <div class="prohibited-item">
+                                <i class="fas fa-times"></i>
+                                <span>Violate or infringe upon the rights of others, including intellectual property rights</span>
+                            </div>
+                            <div class="prohibited-item">
+                                <i class="fas fa-times"></i>
+                                <span>Attempt to gain unauthorized access to any part of the service or its related systems</span>
+                            </div>
+                            <div class="prohibited-item">
+                                <i class="fas fa-times"></i>
+                                <span>Use any device, software, or routine that interferes with the proper functioning of the service</span>
+                            </div>
+                            <div class="prohibited-item">
+                                <i class="fas fa-times"></i>
+                                <span>Introduce viruses, trojans, worms, or other malicious code to the service</span>
+                            </div>
+                            <div class="prohibited-item">
+                                <i class="fas fa-times"></i>
+                                <span>Engage in data mining, scraping, or harvesting of information from the service</span>
+                            </div>
+                            <div class="prohibited-item">
+                                <i class="fas fa-times"></i>
+                                <span>Impersonate any person or entity or misrepresent your affiliation with any person or entity</span>
+                            </div>
+                        </div>
+                        
+                        <p class="content-text">We reserve the right to terminate or restrict your access to our service if, in our sole discretion, we determine that you have violated these terms.</p>
+                    </div>
+                </div>
+
+                <!-- 5. Privacy Policy -->
+                <div class="content-section" id="privacy-policy">
+                    <h3 class="section-title">
+                        <i class="fas fa-user-secret"></i>
+                        5. Privacy Policy
+                    </h3>
+                    <div class="content-card">
+                        <p class="content-text">Your privacy is important to us. Our Privacy Policy, which is incorporated into these Terms of Service, explains how we collect, use, and protect your personal information.</p>
+                        
+                        <p class="content-text">By using our service, you consent to the collection and use of your information as described in our Privacy Policy. You can access our full Privacy Policy <a href="privacy-policy.html" class="content-link">here</a>.</p>
+                        
+                        <h4 class="content-subtitle">Cookies and Tracking</h4>
+                        <p class="content-text">We use cookies and similar tracking technologies to enhance your experience on our platform. These technologies help us understand how you interact with our service, remember your preferences, and improve our offerings.</p>
+                        
+                        <p class="content-text">You can manage your cookie preferences through your browser settings. However, disabling certain cookies may limit your ability to use some features of our service.</p>
+                    </div>
+                </div>
+
+                <!-- 6. Intellectual Property -->
+                <div class="content-section" id="intellectual-property">
+                    <h3 class="section-title">
+                        <i class="fas fa-copyright"></i>
+                        6. Intellectual Property
+                    </h3>
+                    <div class="content-card">
+                        <p class="content-text">All content on CompareHub, including but not limited to text, graphics, logos, icons, images, audio clips, digital downloads, and software, is the property of CompareHub or its content suppliers and is protected by international copyright laws.</p>
+                        
+                        <p class="content-text">The compilation of all content on this site is the exclusive property of CompareHub and is protected by international copyright laws. The service's name, logo, and related marks are trademarks of CompareHub.</p>
+                        
+                        <h4 class="content-subtitle">User Content</h4>
+                        <p class="content-text">By submitting content to our service (such as reviews, comments, or feedback), you grant CompareHub a non-exclusive, royalty-free, perpetual, irrevocable, and fully sublicensable right to use, reproduce, modify, adapt, publish, translate, create derivative works from, distribute, and display such content throughout the world in any media.</p>
+                        
+                        <p class="content-text">You represent and warrant that you own or control all rights to the content you submit, that the content is accurate, and that use of the content does not violate these terms or cause injury to any person or entity.</p>
+                    </div>
+                </div>
+
+                <!-- 7. Third-Party Services -->
+                <div class="content-section" id="third-party-services">
+                    <h3 class="section-title">
+                        <i class="fas fa-external-link-alt"></i>
+                        7. Third-Party Services
+                    </h3>
+                    <div class="content-card">
+                        <p class="content-text">CompareHub may link to or integrate with third-party websites, services, or resources that are not owned or controlled by us. We do not endorse or assume responsibility for any third-party content, products, or services.</p>
+                        
+                        <p class="content-text">When you access third-party websites or use third-party services through our platform, you do so at your own risk. Your interactions with these third parties are governed by their terms of service and privacy policies.</p>
+                        
+                        <h4 class="content-subtitle">Retailer Information</h4>
+                        <p class="content-text">Product information, prices, and availability displayed on CompareHub are provided by our retail partners and are subject to change without notice. While we strive to ensure the accuracy of this information, we cannot guarantee its completeness or reliability.</p>
+                        
+                        <p class="content-text">Before making a purchase, we recommend verifying all information directly with the retailer. CompareHub is not responsible for any discrepancies between the information displayed on our platform and the actual product or service offered by the retailer.</p>
+                    </div>
+                </div>
+
+                <!-- 8. Disclaimers -->
+                <div class="content-section" id="disclaimers">
+                    <h3 class="section-title">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        8. Disclaimers
+                    </h3>
+                    <div class="content-card">
+                        <p class="content-text">THE SERVICE IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS. COMPAREHUB MAKES NO WARRANTIES, EXPRESSED OR IMPLIED, AND HEREBY DISCLAIMS ALL WARRANTIES, INCLUDING WITHOUT LIMITATION, IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, OR COURSE OF PERFORMANCE.</p>
+                        
+                        <p class="content-text">COMPAREHUB DOES NOT WARRANT THAT:</p>
+                        
+                        <div class="disclaimer-list">
+                            <div class="disclaimer-item">
+                                <i class="fas fa-times"></i>
+                                <span>THE SERVICE WILL FUNCTION UNINTERRUPTED, SECURE, OR AVAILABLE AT ANY PARTICULAR TIME OR LOCATION</span>
+                            </div>
+                            <div class="disclaimer-item">
+                                <i class="fas fa-times"></i>
+                                <span>ANY ERRORS OR DEFECTS WILL BE CORRECTED</span>
+                            </div>
+                            <div class="disclaimer-item">
+                                <i class="fas fa-times"></i>
+                                <span>THE SERVICE IS FREE OF VIRUSES OR OTHER HARMFUL COMPONENTS</span>
+                            </div>
+                            <div class="disclaimer-item">
+                                <i class="fas fa-times"></i>
+                                <span>THE RESULTS OF USING THE SERVICE WILL MEET YOUR REQUIREMENTS</span>
+                            </div>
+                        </div>
+                        
+                        <h4 class="content-subtitle">Limitation of Liability</h4>
+                        <p class="content-text">IN NO EVENT SHALL COMPAREHUB BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING WITHOUT LIMITATION, LOSS OF PROFITS, DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES, RESULTING FROM:</p>
+                        
+                        <div class="liability-list">
+                            <div class="liability-item">
+                                <i class="fas fa-arrow-right"></i>
+                                <span>YOUR ACCESS TO OR USE OF OR INABILITY TO ACCESS OR USE THE SERVICE</span>
+                            </div>
+                            <div class="liability-item">
+                                <i class="fas fa-arrow-right"></i>
+                                <span>ANY CONDUCT OR CONTENT OF ANY THIRD PARTY ON THE SERVICE</span>
+                            </div>
+                            <div class="liability-item">
+                                <i class="fas fa-arrow-right"></i>
+                                <span>ANY CONTENT OBTAINED FROM THE SERVICE</span>
+                            </div>
+                            <div class="liability-item">
+                                <i class="fas fa-arrow-right"></i>
+                                <span>UNAUTHORIZED ACCESS, USE, OR ALTERATION OF YOUR TRANSMISSIONS OR CONTENT</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9. Termination -->
+                <div class="content-section" id="termination">
+                    <h3 class="section-title">
+                        <i class="fas fa-ban"></i>
+                        9. Termination
+                    </h3>
+                    <div class="content-card">
+                        <p class="content-text">We may terminate or suspend your account and access to the service immediately, without prior notice or liability, for any reason, including without limitation if you breach these Terms of Service.</p>
+                        
+                        <p class="content-text">Upon termination, your right to use the service will immediately cease. If you wish to terminate your account, you may simply discontinue using the service or contact us to request account deletion.</p>
+                        
+                        <p class="content-text">All provisions of these Terms which by their nature should survive termination shall survive termination, including, without limitation, ownership provisions, warranty disclaimers, indemnity, and limitations of liability.</p>
+                    </div>
+                </div>
+
+                <!-- 10. Governing Law -->
+                <div class="content-section" id="governing-law">
+                    <h3 class="section-title">
+                        <i class="fas fa-gavel"></i>
+                        10. Governing Law
+                    </h3>
+                    <div class="content-card">
+                        <p class="content-text">These Terms shall be governed and construed in accordance with the laws of South Africa, without regard to its conflict of law provisions.</p>
+                        
+                        <p class="content-text">Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights. If any provision of these Terms is held to be invalid or unenforceable by a court, the remaining provisions of these Terms will remain in effect.</p>
+                        
+                        <h4 class="content-subtitle">Dispute Resolution</h4>
+                        <p class="content-text">Any disputes arising out of or relating to these Terms or the service shall be resolved through binding arbitration in accordance with the rules of the Arbitration Foundation of Southern Africa.</p>
+                        
+                        <p class="content-text">The arbitration shall be conducted in English and shall take place in Johannesburg, South Africa. The decision of the arbitrator shall be final and binding on both parties.</p>
+                    </div>
+                </div>
+
+                <!-- 11. Changes to Terms -->
+                <div class="content-section" id="changes-to-terms">
+                    <h3 class="section-title">
+                        <i class="fas fa-edit"></i>
+                        11. Changes to Terms
+                    </h3>
+                    <div class="content-card">
+                        <p class="content-text">We reserve the right, at our sole discretion, to modify or replace these Terms at any time. We will provide notice of any significant changes by posting the new Terms on this page and updating the "Last Updated" date.</p>
+                        
+                        <p class="content-text">Your continued use of the service after any such changes constitutes your acceptance of the new Terms. If you do not agree to the new terms, please stop using the service.</p>
+                        
+                        <p class="content-text">We recommend reviewing these Terms periodically for any changes. Changes to these Terms are effective when they are posted on this page.</p>
+                    </div>
+                </div>
+
+                <!-- 12. Contact Information -->
+                <div class="content-section" id="contact-information">
+                    <h3 class="section-title">
+                        <i class="fas fa-envelope"></i>
+                        12. Contact Information
+                    </h3>
+                    <div class="content-card">
+                        <p class="content-text">If you have any questions about these Terms of Service, please contact us:</p>
+                        
+                        <h4 class="content-subtitle">Get in Touch</h4>
+                        <p class="content-text">We're here to help with any questions or concerns you may have.</p>
+                        
+                        <div class="contact-info-grid">
+                            <div class="contact-info-item">
+                                <div class="contact-info-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="contact-info-content">
+                                    <h5 class="contact-info-title">Email Support:</h5>
+                                    <p class="contact-info-text">Coming Soon</p>
+                                </div>
+                            </div>
+                            <div class="contact-info-item">
+                                <div class="contact-info-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="contact-info-content">
+                                    <h5 class="contact-info-title">Phone Support:</h5>
+                                    <p class="contact-info-text">Coming Soon</p>
+                                </div>
+                            </div>
+                            <div class="contact-info-item">
+                                <div class="contact-info-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="contact-info-content">
+                                    <h5 class="contact-info-title">Address:</h5>
+                                    <p class="contact-info-text">Coming Soon</p>
+                                </div>
+                            </div>
+                            <div class="contact-info-item">
+                                <div class="contact-info-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="contact-info-content">
+                                    <h5 class="contact-info-title">Business Hours:</h5>
+                                    <p class="contact-info-text">Coming Soon</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-box">
+                            <h4 class="content-subtitle">Still Have Questions?</h4>
+                            <p class="highlight-text">If you need further clarification about our Terms of Service or have any concerns, our support team is here to help.</p>
+                            <a href="contact-us.html" class="btn btn-primary">Contact Support</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About CompareHubPrices</h3>
+                <ul>
+                    <li><a href="about-us.html">About Us</a></li>
+                    <li><a href="articles.html">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Help & Support</h3>
+                <ul>
+                    <li><a href="contact-us.html">Contact Us</a></li>
+                    <li><a href="FAQs.html">FAQs</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="Terms-of-Service.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
+                <div class="newsletter-section">
+                    <h4>Get the Best Deals in Your Inbox</h4>
+                    <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                        <input type="email" placeholder="Enter your email address" required aria-label="Email address for newsletter">
+                        <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CompareHub Prices. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Logout Confirmation Modal (Bootstrap Modal) -->
+    <div class="modal fade" id="logoutConfirmModal" tabindex="-1" aria-labelledby="logoutConfirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white justify-content-center position-relative">
+                    <h5 class="modal-title text-center w-100" id="logoutConfirmModalLabel">Sign Out Confirmation</h5>
+                    <button type="button" class="btn-close btn-close-white position-absolute" style="right: 15px; top: 15px;" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center p-4">
+                    <div class="mb-4">
+                        <i class="fas fa-exclamation-circle text-danger" style="font-size: 48px;"></i>
+                    </div>
+                    <h5 class="mb-3">Are you sure you want to sign out?</h5>
+                    <p class="text-muted mb-4">You will need to sign in again to access your account.</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger px-4" id="confirmLogoutBtn">Sign Out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+
+    <script src="assets/scripts/device-detection.js"></script>
+    <script src="assets/scripts/script.js"></script>
+    <script src="assets/scripts/search.js"></script>
+    <script src="assets/scripts/sidebar-header.js"></script>
+    <script src="assets/scripts/sidebar-mobile.js"></script>
+ 
+  
+   
+    <script src="assets/scripts/notifications.js"></script>
+  
+    
+ 
+    
+</body>
+</html>

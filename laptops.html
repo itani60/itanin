@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompareHubPrices - Compare Prices Across Categories</title>
+
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+
+  
+
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/laptops.css">
+    <link rel="stylesheet" href="assets/css/sidebar.css">
+    <link rel="stylesheet" href="assets/css/home.css">
+   
+    
+    <!-- Header Navigation Font -->
+    <style>
+        .notification-buttons .header-link,
+        .categories-dropdown .header-link {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+    </style>
+
+      <link rel="stylesheet" href="assets/css/footer.css">
+      <link rel="stylesheet" href="assets/css/notifications.css">
+      
+  
+    
+
+    
+</head>
+<body>
+    <!-- Desktop Header -->
+    <header class="header desktop-only">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <!-- Mobile Toggle Button - Left Corner -->
+                <div class="col-auto mobile-tablet-only">
+                    <button class="sidebar-toggle" aria-label="Open menu">☰</button>
+                </div>
+                
+                <div class="col-auto">
+                    <div class="logo">
+                        <img src="assets/logo.jpg" alt="CompareHubPrices" class="logo-img">
+                    </div>
+                </div>
+                
+                <!-- Categories Dropdown - Desktop Only -->
+                <div class="col-auto desktop-only">
+                    <div class="categories-dropdown">
+                        <a href="#categories" class="header-link">Categories <i class="fas fa-chevron-down" style="font-size: 0.7em;"></i></a>
+                        <div class="categories-menu">
+                            <div class="categories-column">
+                                <h4>Product Categories</h4>
+                                <a href="#smartphones-tablets" class="category-item" data-category="smartphones-tablets">
+                                    Smartphones and Tablets
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#laptops-accessories" class="category-item" data-category="laptops-accessories">
+                                    Laptops and Accessories
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#wearables" class="category-item" data-category="wearables">
+                                    Wearables Devices
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#televisions" class="category-item" data-category="televisions">
+                                    Televisions & Streaming Devices
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#audio" class="category-item" data-category="audio">
+                                    Audio
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#gaming" class="category-item" data-category="gaming">
+                                    Gaming
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#networking" class="category-item" data-category="networking">
+                                    Wi-Fi & Networking
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#appliances" class="category-item" data-category="appliances">
+                                    Appliances
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </div>
+                            <div class="categories-column subcategories-column" id="subcategories-column">
+                                <h4 id="subcategory-title">Select a category</h4>
+                                <div id="subcategory-content">
+                                    <p>Hover over a category to see subcategories</p>
+                                </div>
+                            </div>
+                            <div class="categories-column sub-subcategories-column" id="sub-subcategories-column">
+                                <h4 id="sub-subcategory-title">Select a subcategory</h4>
+                                <div id="sub-subcategory-content">
+                                    <p>Hover over a subcategory to see more options</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Header Search -->
+                <div class="col-auto desktop-only">
+                    <div class="header-search">
+                        <div class="search-wrapper">
+                            <div class="input-group" style="width: 350px;">
+                                <input type="text" id="headerSearchInput" placeholder="Search..." class="form-control search-input">
+                                <button type="button" class="btn btn-danger search-btn" onclick="performHeaderSearch()">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                            <!-- Desktop Search Suggestions Dropdown -->
+                            <div class="search-suggestions" id="headerSearchSuggestions">
+                                <div class="suggestions-content">
+                                    <!-- Suggestions will be populated here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Notification Buttons - Desktop Only -->
+                <div class="col-auto desktop-only">
+                    <div class="notification-buttons">
+                        <a href="#new-arrivals" class="header-link" onclick="showNewArrivals(); return false;">New Arrivals</a>
+                        <a href="#notifications" class="header-link" onclick="showNotifications(); return false;">Notifications</a>
+                        <a href="#local-business" class="header-link" onclick="showLocalBusiness(); return false;">Local Business</a>
+                        <div class="login-dropdown-container">
+                            <a href="#" class="header-link" id="desktopLoginBtn" onclick="toggleLoginState(); return false;">
+                                Login <i class="fas fa-chevron-down" style="font-size: 0.7em;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Header -->
+    <header class="mobile-header mobile-tablet-only">
+        <div class="mobile-header-container">
+            <div class="mobile-header-top">
+                <!-- Toggle Button -->
+                <button class="btn btn-outline-secondary sidebar-toggle" aria-label="Open menu" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <!-- Logo -->
+                <div class="mobile-logo">
+                    <img src="assets/logo.jpg" alt="CompareHubPrices" class="mobile-logo-img">
+                </div>
+            </div>
+            
+            <div class="mobile-header-bottom">
+                <!-- Search Input -->
+                <div class="mobile-search">
+                    <div class="input-group">
+                        <input type="text" id="mobileHeaderSearchInput" placeholder="Search..." class="form-control mobile-search-input">
+                        <button type="button" class="btn btn-danger search-btn" onclick="performMobileHeaderSearch()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <!-- Search Suggestions Dropdown -->
+                    <div class="mobile-search-suggestions" id="mobileHeaderSearchSuggestions">
+                        <div class="suggestions-content">
+                            <!-- Suggestions will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile/Tablet Sidebar -->
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <div class="sidebar-content p-0">
+            <!-- Welcome Header with Close Button -->
+            <div class="bg-danger text-white py-2 px-3 d-flex justify-content-between align-items-center">
+                <span class="small fw-bold">Welcome back to CompareHubPrices</span>
+                <button class="btn-close btn-close-white btn-sm" onclick="toggleSidebar()" aria-label="Close"></button>
+            </div>
+            
+            
+            <!-- LOGGED OUT STATE - Show this when user is not logged in -->
+            <div id="loggedOutState" class="px-3 py-2">
+                <button class="btn btn-danger w-100 d-flex justify-content-center align-items-center" onclick="toggleLoginState(); return false;">
+                    Login
+                </button>
+            </div>
+            
+            <!-- LOGGED IN STATE - Show this when user is logged in -->
+            <div id="loggedInState" style="display: none;">
+                <!-- User Profile Card -->
+                <div class="text-center py-4 bg-light">
+                    <div class="d-inline-flex justify-content-center align-items-center rounded-circle bg-danger text-white" style="width: 80px; height: 80px; font-size: 28px; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                        TE
+                    </div>
+                    <h5 class="mt-3 mb-1 fw-bold">Test</h5>
+                    <p class="text-muted mb-0">test@example.com</p>
+                </div>
+                
+                <!-- Sign Out Button -->
+                <div class="px-3 py-2">
+                    <button class="btn btn-danger w-100 d-flex justify-content-center align-items-center" onclick="showLogoutConfirmation(); return false;">
+                        Sign Out
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Visual Separator -->
+            <div class="mx-3 my-3">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
+                    <div class="mx-2">
+                        <i class="fas fa-circle" style="font-size: 8px; color: rgba(220, 53, 69, 0.8);"></i>
+                    </div>
+                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to left, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
+                </div>
+            </div>
+            
+            <div class="sidebar-section pt-0 px-3">
+                <h4>Quick Access</h4>
+                <div class="quick-access-grid">
+                    <a href="#new-arrivals" class="quick-access-item new-arrivals">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">New Arrivals</span>
+                            <span class="quick-access-subtitle">Latest products</span>
+                        </div>
+                        <div class="quick-access-badge new">NEW</div>
+                    </a>
+                    
+                    <a href="#notifications" class="quick-access-item notifications">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">Notifications</span>
+                            <span class="quick-access-subtitle">3 unread</span>
+                        </div>
+                        <div class="quick-access-badge count">3</div>
+                    </a>
+                    
+                    <a href="#local-business" class="quick-access-item local-business">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">Local Business</span>
+                            <span class="quick-access-subtitle">Near you</span>
+                        </div>
+                    </a>
+                    
+                    <a href="#profile" class="quick-access-item help">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-id-card"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">My Profile</span>
+                            <span class="quick-access-subtitle">View account</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <!-- Visual Separator -->
+            <div class="mx-3 my-3">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
+                    <div class="mx-2">
+                        <i class="fas fa-circle" style="font-size: 8px; color: rgba(220, 53, 69, 0.8);"></i>
+                    </div>
+                    <div class="flex-grow-1" style="height: 2px; background: linear-gradient(to left, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));"></div>
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <h4>Categories</h4>
+                <div class="category-search">
+                    <input type="text" placeholder="Search categories..." class="category-search-input" id="categorySearchInput">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <ul class="menu-items">
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span>Smartphones and Tablets</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="#smartphones">Smartphones</a></li>
+                            <li class="item"><a href="#tablets">Tablets</a></li>
+                            <li class="item"><a href="#accessories">Mobile Accessories</a></li>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span>Wearables Devices</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="#smartwatches">Smartwatches</a></li>
+                            <li class="item"><a href="#fitness-trackers">Fitness Trackers</a></li>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span>Laptops and Accessories</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="#laptops">Windows Laptops</a></li>
+                            <li class="item"><a href="#desktops">Macbooks</a></li>
+                            <li class="item"><a href="#monitors">Chromebooks</a></li>
+                            <li class="item"><a href="#keyboards">Accessories</a></li>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span>Televisions & Streaming Devices</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="#televisions">Televisions</a></li>
+                            <li class="item"><a href="#streaming">Streaming Devices</a></li>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span>Audio</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="#earbuds">Earbuds</a></li>
+                            <li class="item"><a href="#headphones">Headphones</a></li>
+                            <li class="item"><a href="#speakers">Bluetooth Speakers</a></li>
+                            <li class="item"><a href="#party-speakers">Party Speakers</a></li>
+                            <li class="item"><a href="#soundbars">Soundbars</a></li>
+                            <li class="item"><a href="#hifi">Hi-fi Systems</a></li>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span>Gaming</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="#consoles">Gaming Consoles</a></li>
+                            <li class="item"><a href="#gaming-laptops">Gaming Laptops</a></li>
+                            <li class="item"><a href="#gaming-monitors">Gaming Monitors</a></li>
+                            <li class="item"><a href="#handled-gaming">Handled Gaming</a></li>
+                            <li class="item"><a href="#consoles-accessories">Consoles Accessories</a></li>
+                            <li class="item"><a href="#pc-gaming-accessories">PC Gaming Accessories</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <!-- User Sidebar (shown after login) -->
+    <div class="offcanvas offcanvas-end" id="userSidebar" tabindex="-1">
+        <div class="offcanvas-header bg-danger text-white position-relative overflow-hidden">
+            <div class="d-flex align-items-center">
+                <div>
+                    <h6 class="mb-0 fw-bold">Welcome back to CompareHubPrices</h6>
+                </div>
+            </div>
+            <button type="button" class="btn-close btn-close-white" id="userSidebarClose" data-bs-dismiss="offcanvas"></button>
+        </div>
+        
+        <div class="offcanvas-body p-0 d-flex flex-column">
+            <!-- User Profile Section -->
+            <div class="bg-light p-4 text-center border-bottom">
+                <div class="position-relative d-inline-block mb-3">
+                    <div class="bg-danger rounded-circle d-flex align-items-center justify-content-center shadow-lg" 
+                         style="width: 100px; height: 100px;" id="userAvatar">
+                        <span class="text-white fw-bold fs-3" id="userInitials">JD</span>
+                    </div>
+                </div>
+                <h5 class="fw-bold text-dark mb-1" id="userName">John Doe</h5>
+                <p class="text-muted mb-2" id="userEmail">john.doe@example.com</p>
+            </div>
+            
+            <!-- Quick Access Section -->
+            <div class="sidebar-header">
+                <h3>Quick Access</h3>
+            </div>
+            <div class="sidebar-content">
+                <div class="sidebar-section">
+                    <div class="quick-access-grid">
+                    <a href="#new-arrivals" class="quick-access-item new-arrivals" onclick="closeUserSidebar(); return false;">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">New Arrivals</span>
+                            <span class="quick-access-subtitle">Latest products</span>
+                        </div>
+                        <div class="quick-access-badge new">NEW</div>
+                    </a>
+                    
+                    <a href="#notifications" class="quick-access-item notifications" onclick="closeUserSidebar(); return false;">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">Notifications</span>
+                            <span class="quick-access-subtitle">3 unread</span>
+                        </div>
+                        <div class="quick-access-badge count">3</div>
+                    </a>
+                    
+                    <a href="#local-business" class="quick-access-item local-business" onclick="closeUserSidebar(); return false;">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">Local Business</span>
+                            <span class="quick-access-subtitle">Near you</span>
+                        </div>
+                    </a>
+                    
+                    <a href="#my-profile" class="quick-access-item help" onclick="closeUserSidebar(); return false;">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-id-card"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">My Profile</span>
+                            <span class="quick-access-subtitle">View account</span>
+                        </div>
+                    </a>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <!-- Logout Section -->
+            <div class="p-3 border-top">
+                <button class="btn btn-danger btn-lg w-100 d-flex align-items-center justify-content-center p-3 rounded-3" 
+                        onclick="handleLogout(); return false;">
+                    <i class="fas fa-sign-out-alt me-2"></i>
+                    <span class="fw-bold">Sign Out</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+
+    <section class="hero-carousel-section">
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            
+            <div class="carousel-inner">
+                <!-- Slide 1 -->
+                <div class="carousel-item active">
+                    <div class="hero-slide hero-slide-1">
+                        <div class="hero-overlay"></div>
+                        <div class="container">
+                            <div class="row align-items-center min-vh-100">
+                                <div class="col-lg-6">
+                                    <div class="hero-content">
+                                        <h1 class="hero-title">Find the Best Smartphone Deals</h1>
+                                        <p class="hero-subtitle">Compare prices from 50+ retailers and save up to 30% on your next smartphone purchase</p>
+                                        <div class="hero-actions">
+                                            <button class="btn btn-primary btn-lg me-3">Browse Smartphones</button>
+                                            <button class="btn btn-outline-light btn-lg">Set Price Alerts</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 2 -->
+                <div class="carousel-item">
+                    <div class="hero-slide hero-slide-2">
+                        <div class="hero-overlay"></div>
+                        <div class="container">
+                            <div class="row align-items-center min-vh-100">
+                                <div class="col-lg-6">
+                                    <div class="hero-content">
+                                        <h1 class="hero-title">Latest Smartphone Models</h1>
+                                        <p class="hero-subtitle">Discover the newest smartphones from top brands with real-time price comparisons</p>
+                                        <div class="hero-actions">
+                                            <button class="btn btn-primary btn-lg me-3">View Latest</button>
+                                            <button class="btn btn-outline-light btn-lg">Compare Features</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 3 -->
+                <div class="carousel-item">
+                    <div class="hero-slide hero-slide-3">
+                        <div class="hero-overlay"></div>
+                        <div class="container">
+                            <div class="row align-items-center min-vh-100">
+                                <div class="col-lg-6">
+                                    <div class="hero-content">
+                                        <h1 class="hero-title">Smart Shopping Made Easy</h1>
+                                        <p class="hero-subtitle">Filter by brand, price range, and features to find your perfect smartphone match</p>
+                                        <div class="hero-actions">
+                                            <button class="btn btn-primary btn-lg me-3">Start Shopping</button>
+                                            <button class="btn btn-outline-light btn-lg">Learn More</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+   
+
+
+    <main class="main">
+               
+
+                   <!-- Laptops Filters Section -->
+                   <div class="smartphones-header">
+                       <h1 class="smartphones-title" id="laptopsCategoryTitle">Windows Laptops</h1>
+                       <div class="sort-section">
+                           <label for="laptopsSortSelect">Sort by:</label>
+                           <select id="laptopsSortSelect" class="sort-dropdown">
+                               <option value="relevance">Relevance</option>
+                               <option value="price-low">Price: Low to High</option>
+                               <option value="price-high">Price: High to Low</option>
+                               <option value="name">Name: A to Z</option>
+                           </select>
+                       </div>
+                       <div class="filter-buttons">
+                           <button class="filter-btn" data-filter="brand">
+                               <i class="fas fa-tag"></i>
+                               Brand
+                           </button>
+                           <button class="filter-btn" data-filter="screen-size" id="screenSizeFilter" style="display: none;">
+                               <i class="fas fa-desktop"></i>
+                               Screen Size
+                           </button>
+                           <button class="filter-btn" data-filter="processor" id="processorFilter" style="display: none;">
+                               <i class="fas fa-microchip"></i>
+                               Processor
+                           </button>
+                           <button class="filter-btn" data-filter="categories" id="categoriesFilter" style="display: none;">
+                               <i class="fas fa-list"></i>
+                               Categories
+                           </button>
+                           <button class="filter-btn" data-filter="price">
+                               <i class="fas fa-money-bill"></i>
+                               Price Range
+                           </button>
+                       </div>
+                       
+                       <!-- Brand Filter Options -->
+                       <div class="filter-options" id="brandOptions" style="display: none;">
+                           <div class="filter-options-content">
+                               <h4>Select Brand</h4>
+                               <div class="brand-grid" id="laptopsBrandGrid">
+                                   <!-- Brand buttons will be populated by JavaScript -->
+                               </div>
+                               <div class="filter-actions">
+                                   <button class="btn-apply" data-filter="brand">Apply</button>
+                                   <button class="btn-cancel" data-filter="brand">Cancel</button>
+                               </div>
+                           </div>
+                       </div>
+                       
+                       <!-- Screen Size Filter Options -->
+                       <div class="filter-options" id="screen-sizeOptions" style="display: none;">
+                           <div class="filter-options-content">
+                               <h4>Select Screen Size</h4>
+                               <div class="screen-size-grid">
+                                   <button class="screen-size-option" data-screen-size="all">All Screen Sizes</button>
+                                   <button class="screen-size-option" data-screen-size="11.6">11.6-inch</button>
+                                   <button class="screen-size-option" data-screen-size="13.3">13.3-inch</button>
+                                   <button class="screen-size-option" data-screen-size="14">14-inch</button>
+                                   <button class="screen-size-option" data-screen-size="15.6">15.6-inch</button>
+                                   <button class="screen-size-option" data-screen-size="16">16-inch</button>
+                                   <button class="screen-size-option" data-screen-size="17.3">17.3-inch</button>
+                               </div>
+                               <div class="filter-actions">
+                                   <button class="btn-apply" data-filter="screen-size">Apply</button>
+                                   <button class="btn-cancel" data-filter="screen-size">Cancel</button>
+                               </div>
+                           </div>
+                       </div>
+                       
+                       <!-- Processor Filter Options -->
+                       <div class="filter-options" id="processorOptions" style="display: none;">
+                           <div class="filter-options-content">
+                               <h4>Select Processor</h4>
+                               <div class="processor-grid">
+                                   <button class="processor-option" data-processor="all">All Processors</button>
+                                   <button class="processor-option" data-processor="intel">Intel</button>
+                                   <button class="processor-option" data-processor="intel inside">Intel Inside</button>
+                                   <button class="processor-option" data-processor="intel celeron">Intel Celeron</button>
+                                   <button class="processor-option" data-processor="intel core i3">Intel Core i3</button>
+                                   <button class="processor-option" data-processor="intel core i5">Intel Core i5</button>
+                                   <button class="processor-option" data-processor="intel core i7">Intel Core i7</button>
+                                   <button class="processor-option" data-processor="intel core 5">Intel Core 5</button>
+                                   <button class="processor-option" data-processor="intel core 7">Intel Core 7</button>
+                                   <button class="processor-option" data-processor="intel core ultra 5">Intel Core Ultra 5</button>
+                                   <button class="processor-option" data-processor="intel core ultra 7">Intel Core Ultra 7</button>
+                                   <button class="processor-option" data-processor="intel core ultra 9">Intel Core Ultra 9</button>
+                                   <button class="processor-option" data-processor="amd">AMD</button>
+                                   <button class="processor-option" data-processor="amd athlon">AMD Athlon</button>
+                                   <button class="processor-option" data-processor="amd ryzen">AMD Ryzen</button>
+                                   <button class="processor-option" data-processor="amd ryzen 3">AMD Ryzen 3</button>
+                                   <button class="processor-option" data-processor="amd ryzen 5">AMD Ryzen 5</button>
+                                   <button class="processor-option" data-processor="amd ryzen 7">AMD Ryzen 7</button>
+                                   <button class="processor-option" data-processor="amd ryzen 9">AMD Ryzen 9</button>
+                                   <button class="processor-option" data-processor="amd ryzen ai 7">AMD Ryzen™ AI 7</button>
+                                   <button class="processor-option" data-processor="qualcomm snapdragon">Qualcomm Snapdragon</button>
+                                   <button class="processor-option" data-processor="apple m1">Apple M1</button>
+                                   <button class="processor-option" data-processor="apple m2">Apple M2</button>
+                                   <button class="processor-option" data-processor="apple m3">Apple M3</button>
+                                   <button class="processor-option" data-processor="apple m4">Apple M4</button>
+                               </div>
+                               <div class="filter-actions">
+                                   <button class="btn-apply" data-filter="processor">Apply</button>
+                                   <button class="btn-cancel" data-filter="processor">Cancel</button>
+                               </div>
+                           </div>
+                       </div>
+                       
+                       <!-- Categories Filter Options -->
+                       <div class="filter-options" id="categoriesOptions" style="display: none;">
+                           <div class="filter-options-content">
+                               <h4>Select Category</h4>
+                                <div class="categories-grid">
+                                    <button class="category-option" data-category="all">All Categories</button>
+                                    <button class="category-option" data-category="business-laptops">Business Laptops</button>
+                                    <button class="category-option" data-category="gaming-laptops">Gaming Laptops</button>
+                                    <button class="category-option" data-category="ultrabooks">Ultrabooks</button>
+                                    <button class="category-option" data-category="budget-laptops">Budget Laptops</button>
+                                    <button class="category-option" data-category="2-in-1-laptops">2-in-1 Laptops</button>
+                                </div>
+                               <div class="filter-actions">
+                                   <button class="btn-apply" data-filter="categories">Apply</button>
+                                   <button class="btn-cancel" data-filter="categories">Cancel</button>
+                               </div>
+                           </div>
+                       </div>
+                       
+                       <!-- Price Range Filter Options -->
+                       <div class="filter-options" id="priceOptions" style="display: none;">
+                           <div class="filter-options-content">
+                               <h4>Select Price Range</h4>
+                               <div class="price-range-grid">
+                                   <button class="price-option" data-price="0-10000">Under R10,000</button>
+                                   <button class="price-option" data-price="10000-20000">R10,000 - R20,000</button>
+                                   <button class="price-option" data-price="20000-30000">R20,000 - R30,000</button>
+                                   <button class="price-option" data-price="30000-50000">R30,000 - R50,000</button>
+                                   <button class="price-option" data-price="50000-999999">Over R50,000</button>
+                               </div>
+                               <div class="filter-actions">
+                                   <button class="btn-apply" data-filter="price">Apply</button>
+                                   <button class="btn-cancel" data-filter="price">Cancel</button>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+
+
+
+                   <!-- Products Grid -->
+                   <div class="gaming-products-grid" id="laptopsProductsGrid">
+                       <!-- Products will be populated by JavaScript -->
+                   </div>
+
+                   <!-- Pagination -->
+                   <div class="pagination-container" id="pagination">
+                       <!-- Pagination will be populated by JavaScript -->
+                   </div>
+               </div>
+    </main>
+
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About CompareHubPrices</h3>
+                <ul>
+                    <li><a href="about-us.html">About Us</a></li>
+                    <li><a href="articles.html">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Help & Support</h3>
+                <ul>
+                    <li><a href="contact-us.html">Contact Us</a></li>
+                    <li><a href="FAQs.html">FAQs</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="Terms-of-Service.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
+                <div class="newsletter-section">
+                    <h4>Get the Best Deals in Your Inbox</h4>
+                    <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                        <input type="email" placeholder="Enter your email address" required aria-label="Email address for newsletter">
+                        <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CompareHub Prices. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Logout Confirmation Modal (Bootstrap Modal) -->
+    <div class="modal fade" id="logoutConfirmModal" tabindex="-1" aria-labelledby="logoutConfirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white justify-content-center position-relative">
+                    <h5 class="modal-title text-center w-100" id="logoutConfirmModalLabel">Sign Out Confirmation</h5>
+                    <button type="button" class="btn-close btn-close-white position-absolute" style="right: 15px; top: 15px;" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center p-4">
+                    <div class="mb-4">
+                        <i class="fas fa-exclamation-circle text-danger" style="font-size: 48px;"></i>
+                    </div>
+                    <h5 class="mb-3">Are you sure you want to sign out?</h5>
+                    <p class="text-muted mb-4">You will need to sign in again to access your account.</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger px-4" id="confirmLogoutBtn">Sign Out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+
+    <script src="assets/scripts/device-detection.js"></script>
+    <script src="assets/scripts/script.js"></script>
+    <script src="assets/scripts/search.js"></script>
+    <script src="assets/scripts/sidebar-header.js"></script>
+    <script src="assets/scripts/sidebar-mobile.js"></script>
+    <script src="assets/scripts/laptops.js"></script>
+    <script src="assets/scripts/price-alerts-modal.js"></script>
+ 
+  
+   
+   
+  
+    
+ 
+    
+</body>
+</html>
